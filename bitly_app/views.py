@@ -42,10 +42,11 @@ class ConvertView(View):
 
 class RedirectTo(RedirectView):
     permanent = True
-    url = 'https://redis.io/commands'
 
     def get_redirect_url(self, *args, **kwargs):
-        return super().get_redirect_url(*args, **kwargs)
+        hash = kwargs.get('hash_url')
+        url = cache.hkeys(hash)[0]
+        return url.decode()
 
 
 
